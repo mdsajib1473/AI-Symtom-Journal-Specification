@@ -63,5 +63,4 @@ P5 → History timeline + delete + Render deploy config
 2. Always respond in the same language the user typed (Bangla → Bangla)
 3. Every triage result MUST include the disclaimer:
    "This is not a medical diagnosis. Consult a qualified doctor."
-4. Commit after every working step using format:
-   feat: P1 — Django setup and PostgreSQL connection
+
