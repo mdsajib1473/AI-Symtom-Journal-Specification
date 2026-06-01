@@ -10,7 +10,7 @@ This is a portfolio project — code must be clean and well-commented.
 ## Tech Stack — DO NOT change any of these
 - Backend: Django 5.x
 - Database: PostgreSQL (psycopg2-binary)
-- AI: Anthropic Claude API — model: claude-sonnet-4-20250514
+- AI: Google Gemini API — google-generativeai SDK (model selected in P3)
 - Auth: Django built-in auth only (no OAuth, no allauth)
 - CSS: Tailwind CSS via CDN
 - JS: Vanilla JavaScript only — NO React, Vue, or jQuery
@@ -23,12 +23,12 @@ symptom_journal/     → Django project config
 apps/checker/        → symptom check feature
 apps/accounts/       → auth (signup, login, logout)
 apps/history/        → history timeline
-services/claude_service.py  → ALL Claude API calls go here only
+services/gemini_service.py  → ALL Gemini API calls go here only
 
 ## Build Order
 P1 → Project setup + design system + home page
 P2 → Auth (signup, login, logout) + base template
-P3 → Symptom form + Claude follow-up questions
+P3 → Symptom form + Gemini follow-up questions
 P4 → Triage result card + save to DB
 P5 → History timeline + delete + Render deploy config
 

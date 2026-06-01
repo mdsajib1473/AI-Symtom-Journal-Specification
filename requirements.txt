@@ -1,0 +1,17 @@
+# Web framework — pinned to the 5.x series per Agent.md ("Django 5.x").
+django>=5.0,<6.0
+
+# PostgreSQL driver
+psycopg2-binary
+
+# Loads environment variables from .env
+python-dotenv
+
+# Google Gemini API client
+google-generativeai
+
+# Serves static files in production (Render)
+whitenoise
+
+# IANA time zone data (Windows and slim Linux images have no system tz db)
+tzdata
