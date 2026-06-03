@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Create your account &mdash; SymptomAI{% endblock %}
+
+{% block content %}
+  <div class="max-w-md mx-auto mt-12">
+    <div class="bg-white border border-[#E5E7EB] rounded-xl shadow-sm p-8">
+      <h1 class="text-2xl font-bold text-ink mb-6">Create your account</h1>
+
+      <form method="post" action="{% url 'signup' %}" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="mb-4 border-l-4 border-[#DC2626] bg-red-50 text-[#DC2626] rounded-md px-4 py-3 text-sm">
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% for field in form %}
+          <div class="mb-4">
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-ink mb-1">
+              {{ field.label }}
+            </label>
+            {{ field }}
+            {% for error in field.errors %}
+              <p class="mt-1 text-sm text-[#DC2626]">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+        <button type="submit"
+                class="w-full bg-[#0F766E] text-white rounded-lg py-2 font-medium hover:bg-[#0c5e57] transition-colors">
+          Create account
+        </button>
+      </form>
+
+      <p class="mt-6 text-sm text-muted text-center">
+        Already have an account?
+        <a href="{% url 'login' %}" class="text-[#0F766E] font-medium hover:underline">Login</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

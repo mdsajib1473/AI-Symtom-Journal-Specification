@@ -63,4 +63,11 @@ P5 → History timeline + delete + Render deploy config
 2. Always respond in the same language the user typed (Bangla → Bangla)
 3. Every triage result MUST include the disclaimer:
    "This is not a medical diagnosis. Consult a qualified doctor."
-
+4. Commit and push code if/when necessary with 3 to 5 words.
+5. Write clean, well-commented code — every function and class must have a docstring.
+6. Follow secure coding practices — never expose secrets, always use CSRF protection,
+   validate and sanitize all user inputs before processing.
+7. Write scalable code — keep business logic in services/, keep views thin,
+   never hardcode values that belong in settings or .env.
+8. Do not over-comment — only comment where the code is not self-explanatory.
+   Avoid stating the obvious (e.g. # increment counter above i += 1).
