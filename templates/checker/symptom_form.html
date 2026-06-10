@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Check Your Symptoms &mdash; SymptomAI{% endblock %}
+
+{% block content %}
+  <div class="max-w-2xl mx-auto mt-8">
+    <h1 class="text-3xl font-bold text-ink">Check Your Symptoms</h1>
+    <p class="mt-2 text-muted">
+      Describe how you feel and our AI will ask a few follow-up questions.
+    </p>
+
+    <form method="post" action="{% url 'checker:get_questions' %}" class="mt-6" id="symptom-form">
+      {% csrf_token %}
+
+      <div class="bg-white border border-line rounded-xl shadow-sm p-6">
+        <label for="symptom_text" class="block text-sm font-medium text-ink mb-2">
+          What are you feeling?
+        </label>
+        <textarea id="symptom_text" name="symptom_text" rows="6" maxlength="1000" required
+                  placeholder="Describe what you're feeling... (you can write in Bangla or English)"
+                  class="w-full border border-line rounded-lg p-3 text-ink placeholder:text-muted
+                         focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-brand-teal resize-y"></textarea>
+        <p id="char-counter" class="mt-2 text-sm text-muted text-right">0 / 1000</p>
+      </div>
+
+      <button type="submit" id="submit-btn" disabled
+              class="mt-6 w-full inline-flex items-center justify-center gap-2 bg-brand-teal text-white
+                     font-semibold rounded-lg px-6 py-3 hover:bg-[#0c5e57] transition-colors
+                     disabled:opacity-50 disabled:cursor-not-allowed">
+        <svg id="spinner" class="hidden animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+        </svg>
+        <span id="btn-text">Analyse My Symptoms &rarr;</span>
+      </button>
+    </form>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    (function () {
+      var textarea = document.getElementById('symptom_text');
+      var counter = document.getElementById('char-counter');
+      var form = document.getElementById('symptom-form');
+      var button = document.getElementById('submit-btn');
+      var btnText = document.getElementById('btn-text');
+      var spinner = document.getElementById('spinner');
+      var MIN_CHARS = 10;
+
+      textarea.addEventListener('input', function () {
+        counter.textContent = textarea.value.length + ' / 1000';
+        button.disabled = textarea.value.trim().length < MIN_CHARS;
+      });
+
+      form.addEventListener('submit', function () {
+        button.disabled = true;
+        spinner.classList.remove('hidden');
+        btnText.textContent = 'Analysing your symptoms...';
+      });
+    })();
+  </script>
+{% endblock %}

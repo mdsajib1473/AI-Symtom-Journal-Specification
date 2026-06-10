@@ -7,8 +7,8 @@ psycopg2-binary
 # Loads environment variables from .env
 python-dotenv
 
-# Google Gemini API client
-google-generativeai
+# HTTP client for the OpenRouter chat-completions API
+requests
 
 # Serves static files in production (Render)
 whitenoise

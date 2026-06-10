@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Your Triage Result &mdash; SymptomAI{% endblock %}
+
+{% block content %}
+  <div class="max-w-2xl mx-auto mt-8">
+    <h1 class="text-3xl font-bold text-ink">Your Triage Result</h1>
+
+    <!-- Tier banner -->
+    {% if result.triage_tier == "green" %}
+      <div class="mt-6 rounded-xl bg-[#059669] text-white px-6 py-5 text-center">
+        <p class="text-2xl font-bold">&#x1F7E2; Rest at Home</p>
+      </div>
+    {% elif result.triage_tier == "red" %}
+      <div class="mt-6 rounded-xl bg-[#DC2626] text-white px-6 py-5 text-center">
+        <p class="text-2xl font-bold">&#x1F534; Seek Urgent Care</p>
+      </div>
+    {% else %}
+      <div class="mt-6 rounded-xl bg-[#D97706] text-white px-6 py-5 text-center">
+        <p class="text-2xl font-bold">&#x1F7E1; See a GP Soon</p>
+      </div>
+    {% endif %}
+
+    <!-- Possible conditions -->
+    {% if result.possible_conditions %}
+      <section class="mt-8">
+        <h2 class="text-xl font-bold text-ink">Possible Conditions</h2>
+        <div class="mt-3 space-y-3">
+          {% for condition in result.possible_conditions %}
+            <div class="bg-white border border-line rounded-xl shadow-sm p-5">
+              <p class="font-bold text-ink">{{ condition.name }}</p>
+              <p class="mt-1 text-sm text-muted">{{ condition.description }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Recommended action -->
+    <section class="mt-8">
+      <h2 class="text-xl font-bold text-ink">Recommended Action</h2>
+      <div class="mt-3 bg-brand-light border-l-4 border-brand-teal rounded-md px-5 py-4 text-sm text-ink">
+        {{ result.recommended_action }}
+      </div>
+    </section>
+
+    <!-- Warning signs -->
+    {% if result.warning_signs %}
+      <section class="mt-8">
+        <h2 class="text-xl font-bold text-ink">Watch Out For</h2>
+        <ul class="mt-3 space-y-2">
+          {% for sign in result.warning_signs %}
+            <li class="flex items-start gap-2 text-sm text-ink">
+              <span aria-hidden="true">&#x26A0;&#xFE0F;</span>
+              <span>{{ sign }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    <!-- Disclaimer -->
+    <div class="mt-8 bg-red-50 border border-[#DC2626] rounded-xl px-5 py-4">
+      <p class="font-bold text-[#DC2626] text-sm">
+        &#x2695;&#xFE0F; {{ result.disclaimer }}
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+      <a href="{% url 'checker:symptom_form' %}"
+         class="flex-1 text-center bg-brand-teal text-white font-semibold rounded-lg px-6 py-3
+                hover:bg-[#0c5e57] transition-colors">
+        Check Again
+      </a>
+      {% if user.is_authenticated %}
+        <a href="/history/"
+           class="flex-1 text-center border border-brand-teal text-brand-teal font-semibold rounded-lg
+                  px-6 py-3 hover:bg-brand-light transition-colors">
+          View My History
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

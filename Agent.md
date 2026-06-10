@@ -10,7 +10,8 @@ This is a portfolio project — code must be clean and well-commented.
 ## Tech Stack — DO NOT change any of these
 - Backend: Django 5.x
 - Database: PostgreSQL (psycopg2-binary)
-- AI: Google Gemini API — google-generativeai SDK (model selected in P3)
+- AI: OpenRouter API (https://openrouter.ai) — called via plain HTTPS with `requests`,
+  model set by OPENROUTER_MODEL env var (default: meta-llama/llama-3.3-70b-instruct:free)
 - Auth: Django built-in auth only (no OAuth, no allauth)
 - CSS: Tailwind CSS via CDN
 - JS: Vanilla JavaScript only — NO React, Vue, or jQuery
@@ -23,16 +24,16 @@ symptom_journal/     → Django project config
 apps/checker/        → symptom check feature
 apps/accounts/       → auth (signup, login, logout)
 apps/history/        → history timeline
-services/gemini_service.py  → ALL Gemini API calls go here only
+services/ai_service.py      → ALL AI (OpenRouter) API calls go here only
 
 ## Build Order
 P1 → Project setup + design system + home page
 P2 → Auth (signup, login, logout) + base template
-P3 → Symptom form + Gemini follow-up questions
+P3 → Symptom form + AI follow-up questions
 P4 → Triage result card + save to DB
 P5 → History timeline + delete + Render deploy config
 
-## Current step: P1
+## Current step: P3
 
 ## IN SCOPE
 - Guest symptom check (no login required)

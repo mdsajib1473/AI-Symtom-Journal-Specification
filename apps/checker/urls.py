@@ -1,11 +1,12 @@
-"""
-URL routes for the checker app.
+"""URL routes for the checker app — the three-step symptom check flow."""
+from django.urls import path
 
-Empty in P1 — the symptom-check form and views are built in P3. This module
-exists so the project URLconf can `include("apps.checker.urls")` without error.
-"""
-from django.urls import path  # noqa: F401  (used once routes are added in P3)
+from .views import get_questions_view, get_result_view, symptom_form_view
 
 app_name = "checker"
 
-urlpatterns = []
+urlpatterns = [
+    path("", symptom_form_view, name="symptom_form"),
+    path("questions/", get_questions_view, name="get_questions"),
+    path("result/", get_result_view, name="get_result"),
+]
