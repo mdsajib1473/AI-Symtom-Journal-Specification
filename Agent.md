@@ -10,8 +10,7 @@ This is a portfolio project — code must be clean and well-commented.
 ## Tech Stack — DO NOT change any of these
 - Backend: Django 5.x
 - Database: PostgreSQL (psycopg2-binary)
-- AI: OpenRouter API (https://openrouter.ai) — called via plain HTTPS with `requests`,
-  model set by OPENROUTER_MODEL env var (default: meta-llama/llama-3.3-70b-instruct:free)
+- AI: Groq API — model: llama-3.3-70b-versatile
 - Auth: Django built-in auth only (no OAuth, no allauth)
 - CSS: Tailwind CSS via CDN
 - JS: Vanilla JavaScript only — NO React, Vue, or jQuery
@@ -24,7 +23,7 @@ symptom_journal/     → Django project config
 apps/checker/        → symptom check feature
 apps/accounts/       → auth (signup, login, logout)
 apps/history/        → history timeline
-services/ai_service.py      → ALL AI (OpenRouter) API calls go here only
+services/ai_service.py      → ALL AI (Groq) API calls go here only
 
 ## Build Order
 P1 → Project setup + design system + home page

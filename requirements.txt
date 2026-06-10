@@ -7,7 +7,7 @@ psycopg2-binary
 # Loads environment variables from .env
 python-dotenv
 
-# HTTP client for the OpenRouter chat-completions API
+# HTTP client for the Groq chat-completions API
 requests
 
 # Serves static files in production (Render)

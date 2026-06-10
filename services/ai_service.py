@@ -1,4 +1,4 @@
-"""All OpenRouter AI calls for the symptom checker live in this module.
+"""All Groq AI calls for the symptom checker live in this module.
 
 Views must never talk to the API directly — they call the two public helpers:
 
@@ -18,8 +18,8 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-API_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
+API_URL = "https://api.groq.com/openai/v1/chat/completions"
+MODEL = "llama-3.3-70b-versatile"
 REQUEST_TIMEOUT = 30  # seconds
 
 # Required on every triage result, exactly as written (Agent.md rule 3).
@@ -157,10 +157,10 @@ def get_triage_result(symptom_text, questions_and_answers, language):
 # Internal helpers
 # ---------------------------------------------------------------------------
 def _chat(system, user):
-    """Send one system+user exchange to OpenRouter and return the reply text."""
-    api_key = os.environ.get("OPENROUTER_API_KEY")
+    """Send one system+user exchange to Groq and return the reply text."""
+    api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
-        raise RuntimeError("OPENROUTER_API_KEY is not set")
+        raise RuntimeError("GROQ_API_KEY is not set")
 
     response = requests.post(
         API_URL,
@@ -169,7 +169,7 @@ def _chat(system, user):
             "Content-Type": "application/json",
         },
         json={
-            "model": os.environ.get("OPENROUTER_MODEL", DEFAULT_MODEL),
+            "model": MODEL,
             "messages": [
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},
