@@ -98,4 +98,6 @@ def get_result_view(request):
     for key in (SESSION_SYMPTOM, SESSION_QUESTIONS, SESSION_LANGUAGE):
         request.session.pop(key, None)
 
-    return render(request, "checker/result.html", {"result": result})
+    return render(
+        request, "checker/result.html", {"result": result, "language": language}
+    )

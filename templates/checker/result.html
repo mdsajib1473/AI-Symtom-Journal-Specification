@@ -62,7 +62,12 @@
     <!-- Disclaimer -->
     <div class="mt-8 bg-red-50 border border-[#DC2626] rounded-xl px-5 py-4">
       <p class="font-bold text-[#DC2626] text-sm">
-        &#x2695;&#xFE0F; {{ result.disclaimer }}
+        &#x2695;&#xFE0F;
+        {% if language == "Bangla" %}
+          এটি কোনো চিকিৎসা রোগ নির্ণয় নয়। একজন যোগ্য ডাক্তারের পরামর্শ নিন।
+        {% else %}
+          This is not a medical diagnosis. Consult a qualified doctor.
+        {% endif %}
       </p>
     </div>
 
@@ -74,7 +79,7 @@
         Check Again
       </a>
       {% if user.is_authenticated %}
-        <a href="/history/"
+        <a href="{% url 'history:history_list' %}"
            class="flex-1 text-center border border-brand-teal text-brand-teal font-semibold rounded-lg
                   px-6 py-3 hover:bg-brand-light transition-colors">
           View My History

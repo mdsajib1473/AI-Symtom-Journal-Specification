@@ -1,11 +1,11 @@
-"""
-URL routes for the history app.
+"""URL routes for the history app — timeline and soft delete."""
+from django.urls import path
 
-Empty in P1 — the history timeline is built in P5. This module exists so the
-project URLconf can `include("apps.history.urls")` without error.
-"""
-from django.urls import path  # noqa: F401  (used once routes are added in P5)
+from .views import delete_check_view, history_list_view
 
 app_name = "history"
 
-urlpatterns = []
+urlpatterns = [
+    path("", history_list_view, name="history_list"),
+    path("delete/<int:pk>/", delete_check_view, name="delete_check"),
+]

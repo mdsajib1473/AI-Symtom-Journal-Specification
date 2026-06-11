@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Your Symptom History &mdash; SymptomAI{% endblock %}
+
+{% block content %}
+  <div class="max-w-2xl mx-auto mt-8">
+    <h1 class="text-2xl font-bold text-ink">Your Symptom History</h1>
+    <p class="mt-2 text-muted">All your past checks, newest first.</p>
+
+    {% if not checks %}
+      <!-- Empty state -->
+      <div class="mt-16 text-center">
+        <p class="text-muted">No checks yet.</p>
+        <a href="{% url 'checker:symptom_form' %}"
+           class="mt-6 inline-flex items-center gap-2 bg-brand-teal text-white font-semibold rounded-lg
+                  px-6 py-3 hover:bg-[#0c5e57] transition-colors">
+          Check Your Symptoms <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    {% else %}
+      <div class="mt-6 space-y-4">
+        {% for check in checks %}
+          <div class="bg-white border border-line rounded-xl shadow-sm p-5">
+            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+
+              <!-- Tier badge -->
+              <div class="shrink-0 sm:w-44">
+                <span class="inline-flex items-center gap-2 text-sm font-semibold
+                  {% if check.triage_tier == 'green' %}text-[#059669]
+                  {% elif check.triage_tier == 'red' %}text-[#DC2626]
+                  {% else %}text-[#D97706]{% endif %}">
+                  <span class="w-2.5 h-2.5 rounded-full
+                    {% if check.triage_tier == 'green' %}bg-[#059669]
+                    {% elif check.triage_tier == 'red' %}bg-[#DC2626]
+                    {% else %}bg-[#D97706]{% endif %}"></span>
+                  {% if check.language == "Bangla" %}
+                    {% if check.triage_tier == "green" %}বাড়িতে বিশ্রাম নিন
+                    {% elif check.triage_tier == "red" %}জরুরি চিকিৎসা নিন
+                    {% else %}শীঘ্রই একজন ভালো ডাক্তার দেখান{% endif %}
+                  {% else %}
+                    {% if check.triage_tier == "green" %}Rest at Home
+                    {% elif check.triage_tier == "red" %}Seek Urgent Care
+                    {% else %}See a Good Doctor Soon{% endif %}
+                  {% endif %}
+                </span>
+              </div>
+
+              <!-- Symptom preview + date -->
+              <div class="flex-1 min-w-0">
+                <p class="text-sm text-ink">{{ check.symptom_description|truncatechars:100 }}</p>
+                <p class="mt-1 text-xs text-muted">{{ check.created_at|date:"j M Y, g:i A" }}</p>
+              </div>
+
+              <!-- Actions -->
+              <div class="shrink-0 flex gap-2">
+                <button type="button"
+                        class="view-btn px-4 py-1.5 rounded-lg border border-brand-teal text-brand-teal
+                               text-sm font-medium hover:bg-brand-light transition-colors"
+                        data-target="detail-{{ check.pk }}">
+                  View
+                </button>
+                <button type="button"
+                        class="delete-btn px-4 py-1.5 rounded-lg border border-[#DC2626] text-[#DC2626]
+                               text-sm font-medium hover:bg-red-50 transition-colors"
+                        data-url="{% url 'history:delete_check' check.pk %}">
+                  Delete
+                </button>
+              </div>
+            </div>
+
+            <!-- Expanded detail (collapsed by default, toggled by View) -->
+            <div id="detail-{{ check.pk }}" class="overflow-hidden transition-all duration-300" style="max-height: 0;">
+              <div class="mt-4 pt-4 border-t border-line space-y-4">
+
+                {% if check.ai_result.possible_conditions %}
+                  <div>
+                    <h3 class="text-sm font-bold text-ink">
+                      {% if check.language == "Bangla" %}সম্ভাব্য সমস্যা{% else %}Possible Conditions{% endif %}
+                    </h3>
+                    <div class="mt-2 space-y-2">
+                      {% for condition in check.ai_result.possible_conditions %}
+                        <div class="bg-gray-50 rounded-lg px-4 py-3">
+                          <p class="text-sm font-semibold text-ink">{{ condition.name }}</p>
+                          <p class="mt-0.5 text-xs text-muted">{{ condition.description }}</p>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+
+                <div>
+                  <h3 class="text-sm font-bold text-ink">
+                    {% if check.language == "Bangla" %}পরামর্শ{% else %}Recommended Action{% endif %}
+                  </h3>
+                  <div class="mt-2 bg-brand-light border-l-4 border-brand-teal rounded-md px-4 py-3 text-sm text-ink">
+                    {{ check.ai_result.recommended_action }}
+                  </div>
+                </div>
+
+                {% if check.ai_result.warning_signs %}
+                  <div>
+                    <h3 class="text-sm font-bold text-ink">
+                      {% if check.language == "Bangla" %}সতর্ক থাকুন{% else %}Watch Out For{% endif %}
+                    </h3>
+                    <ul class="mt-2 space-y-1.5">
+                      {% for sign in check.ai_result.warning_signs %}
+                        <li class="flex items-start gap-2 text-sm text-ink">
+                          <span aria-hidden="true">&#x26A0;&#xFE0F;</span>
+                          <span>{{ sign }}</span>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+
+                <div class="bg-red-50 border border-[#DC2626] rounded-lg px-4 py-3">
+                  <p class="font-bold text-[#DC2626] text-xs">
+                    &#x2695;&#xFE0F;
+                    {% if check.language == "Bangla" %}
+                      এটি কোনো চিকিৎসা রোগ নির্ণয় নয়। একজন যোগ্য ডাক্তারের পরামর্শ নিন।
+                    {% else %}
+                      This is not a medical diagnosis. Consult a qualified doctor.
+                    {% endif %}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Delete confirmation modal (shared by all entries) -->
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50 px-4">
+    <div class="bg-white rounded-xl shadow-lg p-6 max-w-sm w-full">
+      <p class="font-medium text-ink">Delete this entry? This cannot be undone.</p>
+      <form method="post" id="delete-form" class="mt-6 flex justify-end gap-3">
+        {% csrf_token %}
+        <button type="button" id="modal-cancel"
+                class="px-4 py-2 rounded-lg border border-line text-ink text-sm font-medium hover:bg-gray-50 transition-colors">
+          Cancel
+        </button>
+        <button type="submit"
+                class="px-4 py-2 rounded-lg bg-[#DC2626] text-white text-sm font-medium hover:bg-red-700 transition-colors">
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    (function () {
+      // Smooth expand/collapse for each entry's detail section.
+      document.querySelectorAll('.view-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var detail = document.getElementById(btn.dataset.target);
+          if (!detail) { return; }
+          var collapsed = detail.style.maxHeight === '0px' || detail.style.maxHeight === '';
+          detail.style.maxHeight = collapsed ? detail.scrollHeight + 'px' : '0px';
+        });
+      });
+
+      // Delete confirmation modal: point the shared form at the chosen entry.
+      var modal = document.getElementById('delete-modal');
+      var form = document.getElementById('delete-form');
+      var cancel = document.getElementById('modal-cancel');
+
+      document.querySelectorAll('.delete-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          form.action = btn.dataset.url;
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        });
+      });
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      cancel.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) { closeModal(); }
+      });
+    })();
+  </script>
+{% endblock %}

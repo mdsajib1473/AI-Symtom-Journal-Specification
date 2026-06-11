@@ -59,7 +59,7 @@
           <a href="{% url 'home' %}" class="text-sm font-medium text-ink hover:text-brand-teal">Home</a>
           <a href="/check/" class="text-sm font-medium text-ink hover:text-brand-teal">Check Symptoms</a>
           {% if user.is_authenticated %}
-            <a href="/history/" class="text-sm font-medium text-ink hover:text-brand-teal">History</a>
+            <a href="{% url 'history:history_list' %}" class="text-sm font-medium text-ink hover:text-brand-teal">History</a>
             <form method="post" action="{% url 'logout' %}" class="inline">
               {% csrf_token %}
               <button type="submit" class="text-sm font-medium text-ink hover:text-brand-teal">Logout</button>
@@ -87,7 +87,7 @@
         <a href="{% url 'home' %}" class="block text-sm font-medium text-ink hover:text-brand-teal">Home</a>
         <a href="/check/" class="block text-sm font-medium text-ink hover:text-brand-teal">Check Symptoms</a>
         {% if user.is_authenticated %}
-          <a href="/history/" class="block text-sm font-medium text-ink hover:text-brand-teal">History</a>
+          <a href="{% url 'history:history_list' %}" class="block text-sm font-medium text-ink hover:text-brand-teal">History</a>
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit" class="block text-sm font-medium text-ink hover:text-brand-teal">Logout</button>
