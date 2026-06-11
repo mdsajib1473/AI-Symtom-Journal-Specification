@@ -31,6 +31,14 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
+# Origins trusted for CSRF-protected requests behind HTTPS (Render).
+# Comma-separated with scheme, e.g. "https://my-app.onrender.com"
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
 
 # ---------------------------------------------------------------------------
 # Applications

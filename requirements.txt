@@ -13,5 +13,8 @@ requests
 # Serves static files in production (Render)
 whitenoise
 
+# Production WSGI server (Render)
+gunicorn
+
 # IANA time zone data (Windows and slim Linux images have no system tz db)
 tzdata
