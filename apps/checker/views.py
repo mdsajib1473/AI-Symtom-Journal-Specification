@@ -1,4 +1,4 @@
-"""Views for the symptom checker — a three-step flow.
+"""Views for the symptom checker - a three-step flow.
 
 Step 1 renders the symptom form, step 2 returns AI follow-up questions, and
 step 3 returns the triage result. All AI work is delegated to
@@ -26,13 +26,13 @@ MAX_SYMPTOM_LENGTH = 1000
 
 
 def symptom_form_view(request):
-    """Step 1 — render the symptom description form (guests welcome)."""
+    """Step 1 - render the symptom description form (guests welcome)."""
     return render(request, "checker/symptom_form.html")
 
 
 @require_POST
 def get_questions_view(request):
-    """Step 2 — validate the symptom text and show AI follow-up questions."""
+    """Step 2 - validate the symptom text and show AI follow-up questions."""
     symptom_text = request.POST.get("symptom_text", "").strip()
 
     if not MIN_SYMPTOM_LENGTH <= len(symptom_text) <= MAX_SYMPTOM_LENGTH:
@@ -59,7 +59,7 @@ def get_questions_view(request):
 
 @require_POST
 def get_result_view(request):
-    """Step 3 — collect answers, get the triage result, and show the card.
+    """Step 3 - collect answers, get the triage result, and show the card.
 
     Logged-in users get a SymptomCheck record saved; guests just see the
     result. The in-progress session data is cleared either way.

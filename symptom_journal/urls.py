@@ -14,7 +14,7 @@ from .views import home_view
 
 urlpatterns = [
     path("", home_view, name="home"),
-    # Themed login page — must precede the auth include so it wins for /accounts/login/.
+    # Themed login page - must precede the auth include so it wins for /accounts/login/.
     path(
         "accounts/login/",
         LoginView.as_view(

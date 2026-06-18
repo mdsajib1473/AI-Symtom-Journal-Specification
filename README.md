@@ -1,4 +1,4 @@
-# SymptomAI — AI Symptom Triage Journal
+# SymptomAI - AI Symptom Triage Journal
 
 ## Project Overview
 
@@ -6,25 +6,29 @@ SymptomAI is a Django-based web application that helps users understand their sy
 
 ## Live Website
 
-*(Add your Render URL here after deploying)*
+## https://symptom-ai-journal.onrender.com/
 
 ## Features
 
 ### User-Facing Features
 
-Any visitor can complete a full symptom check without creating an account. Users describe their symptoms in a free-text field (Bangla or English), and the AI generates exactly four targeted follow-up questions — rendered as Yes/No pill toggles, text inputs, or number inputs depending on the question type. After answering, a triage result card displays possible conditions, a colour-coded action tier (green = rest at home, yellow = see a doctor soon, red = seek urgent care), specific warning signs to watch for, and a medical disclaimer. Registered users can log in to have each check saved automatically to a personal history timeline, where they can expand any past result to review the full detail or soft-delete entries they no longer need. The entire interface is mobile-responsive and works in both Bangla and English — language detection is automatic based on the script of the user's input.
+Any visitor can complete a full symptom check without creating an account. Users describe their symptoms in a free-text field (Bangla or English), and the AI generates exactly four targeted follow-up questions - rendered as Yes/No pill toggles, text inputs, or number inputs depending on the question type. After answering, a triage result card displays possible conditions, a colour-coded action tier (green = rest at home, yellow = see a doctor soon, red = seek urgent care), specific warning signs to watch for, and a medical disclaimer. Registered users can log in to have each check saved automatically to a personal history timeline, where they can expand any past result to review the full detail or soft-delete entries they no longer need. The entire interface is mobile-responsive and works in both Bangla and English - language detection is automatic based on the script of the user's input.
 
 ### AI Integration
 
-The AI layer is powered by the Groq API (model: `llama-3.3-70b-versatile`) called via a standard OpenAI-compatible REST interface. All API communication is isolated in `services/ai_service.py` — views never talk to the API directly. The service includes robust fallback logic: if the API is unreachable or returns unparseable output, the user receives a safe set of generic follow-up questions or a yellow-tier "consult a doctor" result rather than an error page. The Bangla disclaimer is enforced in code and cannot be omitted by the AI.
+The AI layer is powered by the Groq API (model: `llama-3.3-70b-versatile`) called via a standard OpenAI-compatible REST interface. All API communication is isolated in `services/ai_service.py` - views never talk to the API directly. The service includes robust fallback logic: if the API is unreachable or returns unparseable output, the user receives a safe set of generic follow-up questions or a yellow-tier "consult a doctor" result rather than an error page. The Bangla disclaimer is enforced in code and cannot be omitted by the AI.
 
 ### Security and Data Handling
 
-All forms use Django's built-in CSRF protection. User inputs are validated server-side (10–1000 character range for symptom descriptions). Ownership is enforced on delete operations — users can only soft-delete their own records, with a 403 returned on any attempt to access another user's data. History entries are soft-deleted (`is_deleted=True`) rather than permanently removed. Session data for in-progress checks is cleared immediately after the result is displayed.
+All forms use Django's built-in CSRF protection. User inputs are validated server-side (10–1000 character range for symptom descriptions). Ownership is enforced on delete operations - users can only soft-delete their own records, with a 403 returned on any attempt to access another user's data. History entries are soft-deleted (`is_deleted=True`) rather than permanently removed. Session data for in-progress checks is cleared immediately after the result is displayed.
 
 ## Screenshots
 
-*(Add screenshots here after deploying)*
+![Homepage](screenshots/Homepage.png)
+![Check page](screenshots/check.png)
+![Follow Up Questions](screenshots/questions.png)
+![AI Results](screenshots/results.png)
+
 
 ## Tech Stack
 
@@ -32,10 +36,10 @@ All forms use Django's built-in CSRF protection. User inputs are validated serve
 |---|---|
 | **Backend Framework** | Django 5.2 |
 | **Database** | PostgreSQL (hosted on Supabase) |
-| **AI Provider** | Groq API — model `llama-3.3-70b-versatile` |
+| **AI Provider** | Groq API - model `llama-3.3-70b-versatile` |
 | **Auth** | Django built-in authentication |
 | **Frontend Styling** | Tailwind CSS via CDN (brand teal `#0F766E`, mobile-responsive) |
-| **JavaScript** | Vanilla JS only — no React, Vue, or jQuery |
+| **JavaScript** | Vanilla JS only - no React, Vue, or jQuery |
 | **Static Files** | WhiteNoise (compressed manifest storage in production) |
 | **Deployment** | Render.com (free tier, automatic HTTPS) |
 | **WSGI Server** | Gunicorn |
@@ -147,12 +151,12 @@ Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) to use the app.
    - **Build Command:** `./build.sh`
    - **Start Command:** `gunicorn symptom_journal.wsgi:application`
 4. Add the following environment variables:
-   - `SECRET_KEY` — generate a fresh 50+ character key
-   - `DEBUG` — `False`
-   - `DATABASE_URL` — your Supabase PostgreSQL connection string
-   - `GROQ_API_KEY` — your Groq API key
-   - `ALLOWED_HOSTS` — `your-app-name.onrender.com`
-   - `CSRF_TRUSTED_ORIGINS` — `https://your-app-name.onrender.com`
+   - `SECRET_KEY` - generate a fresh 50+ character key
+   - `DEBUG` - `False`
+   - `DATABASE_URL` - your Supabase PostgreSQL connection string
+   - `GROQ_API_KEY` - your Groq API key
+   - `ALLOWED_HOSTS` - `your-app-name.onrender.com`
+   - `CSRF_TRUSTED_ORIGINS` - `https://your-app-name.onrender.com`
 
 Render will run `build.sh` on each deploy, which installs dependencies, collects static files, and applies any pending migrations automatically.
 
@@ -164,7 +168,7 @@ Run the standalone connectivity test (no Django required):
 python scripts/test_ai.py
 ```
 
-A successful response prints a JSON array of four follow-up questions. If you see a `401`, check your `GROQ_API_KEY`. If you see a `429`, you have hit the free-tier rate limit — wait a moment and retry.
+A successful response prints a JSON array of four follow-up questions. If you see a `401`, check your `GROQ_API_KEY`. If you see a `429`, you have hit the free-tier rate limit - wait a moment and retry.
 
 ## Disclaimer
 

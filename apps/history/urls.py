@@ -1,4 +1,4 @@
-"""URL routes for the history app — timeline and soft delete."""
+"""URL routes for the history app - timeline and soft delete."""
 from django.urls import path
 
 from .views import delete_check_view, history_list_view

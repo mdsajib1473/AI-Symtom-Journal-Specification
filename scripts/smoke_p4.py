@@ -1,4 +1,4 @@
-"""P4 smoke test — run with: python manage.py shell -c "exec(open('scripts/smoke_p4.py', encoding='utf-8').read())"
+"""P4 smoke test - run with: python manage.py shell -c "exec(open('scripts/smoke_p4.py', encoding='utf-8').read())"
 
 Covers the server-side P4 checks: login gate, timeline rendering with
 language-aware labels, soft delete + ownership 403, empty state, and the

@@ -1,4 +1,4 @@
-# Web framework — pinned to the 5.x series per Agent.md ("Django 5.x").
+# Web framework - pinned to the 5.x series per Agent.md ("Django 5.x").
 django>=5.0,<6.0
 
 # PostgreSQL driver

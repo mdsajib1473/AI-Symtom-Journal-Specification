@@ -1,7 +1,7 @@
 """
 Django settings for the symptom_journal project.
 
-P1 — foundation only. All environment-specific configuration is read from a
+P1 - foundation only. All environment-specific configuration is read from a
 local .env file (see .env.example for the required keys) via python-dotenv.
 """
 

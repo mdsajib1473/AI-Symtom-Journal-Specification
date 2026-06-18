@@ -1,4 +1,4 @@
-"""URL routes for the checker app — the three-step symptom check flow."""
+"""URL routes for the checker app - the three-step symptom check flow."""
 from django.urls import path
 
 from .views import get_questions_view, get_result_view, symptom_form_view

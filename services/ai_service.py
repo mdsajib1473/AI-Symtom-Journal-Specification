@@ -1,6 +1,6 @@
 """All Groq AI calls for the symptom checker live in this module.
 
-Views must never talk to the API directly — they call the two public helpers:
+Views must never talk to the API directly - they call the two public helpers:
 
     get_follow_up_questions(symptom_text, language) -> list[dict]
     get_triage_result(symptom_text, questions_and_answers, language) -> dict

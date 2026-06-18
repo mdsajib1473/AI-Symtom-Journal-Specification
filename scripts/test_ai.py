@@ -2,7 +2,7 @@
 
 Sends a fixed symptom-triage prompt to the Groq API (llama-3.3-70b-versatile)
 and prints the raw response text. Deliberately isolated: no Django imports, no
-services/ dependencies — purely verifies the key and model work.
+services/ dependencies - purely verifies the key and model work.
 
 Run:  python scripts/test_ai.py
 """

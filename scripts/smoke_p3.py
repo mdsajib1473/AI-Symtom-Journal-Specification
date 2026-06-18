@@ -1,4 +1,4 @@
-"""P3 smoke test — run with: python manage.py shell -c "exec(open('scripts/smoke_p3.py', encoding='utf-8').read())"
+"""P3 smoke test - run with: python manage.py shell -c "exec(open('scripts/smoke_p3.py', encoding='utf-8').read())"
 
 Exercises the three-step checker flow with Django's test client, as both a
 guest and a logged-in user, and verifies the DB-save behaviour for each.

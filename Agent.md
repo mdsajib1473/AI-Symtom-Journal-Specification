@@ -1,19 +1,19 @@
-# Agent.md — AI Symptom Journal: Triage Assistant
+# Agent.md - AI Symptom Journal: Triage Assistant
 # Read this file before writing any code. Follow it strictly.
 
 ## Project Purpose
 A Django web app where users describe symptoms in Bangla or English.
 The AI asks follow-up questions, then returns possible conditions
 and a recommended action tier (green / yellow / red).
-This is a portfolio project — code must be clean and well-commented.
+This is a portfolio project - code must be clean and well-commented.
 
-## Tech Stack — DO NOT change any of these
+## Tech Stack - DO NOT change any of these
 - Backend: Django 5.x
 - Database: PostgreSQL (psycopg2-binary)
-- AI: Groq API — model: llama-3.3-70b-versatile
+- AI: Groq API - model: llama-3.3-70b-versatile
 - Auth: Django built-in auth only (no OAuth, no allauth)
 - CSS: Tailwind CSS via CDN
-- JS: Vanilla JavaScript only — NO React, Vue, or jQuery
+- JS: Vanilla JavaScript only - NO React, Vue, or jQuery
 - Deployment: Render.com (free tier)
 - Static files: WhiteNoise
 - Env vars: python-dotenv
@@ -38,14 +38,14 @@ P5 → History timeline + delete + Render deploy config
 - Guest symptom check (no login required)
 - Follow-up questions from Claude (3-5 questions, shown all at once)
 - Triage result: possible conditions + green/yellow/red tier + disclaimer
-- User registration and login (optional — unlocks history)
+- User registration and login (optional - unlocks history)
 - History timeline for logged-in users
 - Delete a history entry
 - Bangla + English language support
 - Mobile-responsive design
 - Render.com deployment
 
-## OUT OF SCOPE — do not build these under any circumstances
+## OUT OF SCOPE - do not build these under any circumstances
 - Doctor booking or telemedicine
 - Medication or drug name recommendations
 - Mental health / psychiatric triage
@@ -64,10 +64,10 @@ P5 → History timeline + delete + Render deploy config
 3. Every triage result MUST include the disclaimer:
    "This is not a medical diagnosis. Consult a qualified doctor."
 4. Commit and push code if/when necessary with 3 to 5 words.
-5. Write clean, well-commented code — every function and class must have a docstring.
-6. Follow secure coding practices — never expose secrets, always use CSRF protection,
+5. Write clean, well-commented code - every function and class must have a docstring.
+6. Follow secure coding practices - never expose secrets, always use CSRF protection,
    validate and sanitize all user inputs before processing.
-7. Write scalable code — keep business logic in services/, keep views thin,
+7. Write scalable code - keep business logic in services/, keep views thin,
    never hardcode values that belong in settings or .env.
-8. Do not over-comment — only comment where the code is not self-explanatory.
+8. Do not over-comment - only comment where the code is not self-explanatory.
    Avoid stating the obvious (e.g. # increment counter above i += 1).
