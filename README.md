@@ -34,6 +34,9 @@ All forms use Django's built-in CSRF protection. User inputs are validated serve
 ![Check page](screenshots/check.png)
 ![Follow Up Questions](screenshots/questions.png)
 ![AI Results](screenshots/results.png)
+![Check page](screenshots/check2.png)
+![Follow Up Questions](screenshots2/questions2.png)
+![AI Results](screenshots/results2.png)
 
 
 ## Tech Stack
