@@ -1,5 +1,7 @@
 # SymptomAI - AI Symptom Triage Journal
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-symptom--ai--journal.onrender.com-0F766E?style=for-the-badge)](https://symptom-ai-journal.onrender.com)
+
 ## Project Overview
 
 SymptomAI is a Django-based web application that helps users understand their symptoms through an AI-powered triage workflow. Users describe how they feel in Bangla or English, and the AI asks targeted follow-up questions before returning a triage assessment with possible conditions, a recommended action tier (green / yellow / red), and important warning signs. The platform supports both guest and registered users, with registered users able to save and review their full symptom history. This is a portfolio project demonstrating full-stack Django development with AI integration, multilingual support, and production deployment on Render.com.
