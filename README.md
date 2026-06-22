@@ -7,6 +7,7 @@
 ![Deployment](https://img.shields.io/badge/Deploy-Render-46E3B7?style=flat-square&logo=render&logoColor=white)
 ![Languages](https://img.shields.io/badge/Languages-Bangla%20%2B%20English-orange?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Live-success?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 # SymptomAI - AI Symptom Triage Journal
 
