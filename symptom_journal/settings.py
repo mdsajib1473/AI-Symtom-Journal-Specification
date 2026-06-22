@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.checker",
     "apps.accounts",
     "apps.history",
+    "apps.feedback",
 ]
 
 MIDDLEWARE = [

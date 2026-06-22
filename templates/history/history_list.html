@@ -123,6 +123,12 @@
                     {% endif %}
                   </p>
                 </div>
+
+                <a href="{% url 'checker:view_result' check.pk %}"
+                   class="inline-flex items-center gap-1 text-sm font-medium text-brand-teal hover:underline">
+                  {% if check.language == "Bangla" %}সম্পূর্ণ ফলাফল দেখুন{% else %}View full result page{% endif %}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
               </div>
             </div>
           </div>

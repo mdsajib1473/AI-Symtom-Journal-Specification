@@ -86,5 +86,133 @@
         </a>
       {% endif %}
     </div>
+
+    <!-- Feedback (user study) -->
+    {% if check_pk %}
+      <section class="mt-10 border-t border-line pt-8">
+        <h2 class="text-xl font-bold text-ink">
+          {% if language == "Bangla" %}
+            আমাদের উন্নতিতে সাহায্য করুন - এই ফলাফলটি রেট করুন
+          {% else %}
+            Help Us Improve - Rate This Result
+          {% endif %}
+        </h2>
+
+        {% if feedback_submitted %}
+          <p class="mt-4 text-sm text-muted">
+            {% if language == "Bangla" %}
+              &#x2713; মতামত জমা দেওয়া হয়েছে। ধন্যবাদ।
+            {% else %}
+              &#x2713; Feedback submitted. Thank you.
+            {% endif %}
+          </p>
+        {% else %}
+          {% if feedback_error %}
+            <div class="mt-4 bg-red-50 border-l-4 border-[#DC2626] text-[#DC2626] rounded-md px-4 py-3 text-sm">
+              {% if language == "Bangla" %}
+                অনুগ্রহ করে উভয় প্রশ্নে ১ থেকে ৫ রেট করুন।
+              {% else %}
+                Please rate both questions from 1 to 5.
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <form method="post" action="{% url 'feedback:submit_feedback' check_pk %}" class="mt-5 space-y-6">
+            {% csrf_token %}
+
+            <!-- Usefulness rating -->
+            <div>
+              <p class="text-sm font-semibold text-ink">
+                {% if language == "Bangla" %}এই ফলাফল কতটা উপকারী ছিল?{% else %}How useful was this result?{% endif %}
+              </p>
+              <div class="star-rating mt-2 flex gap-1" role="radiogroup">
+                {% for i in "12345" %}
+                  <input type="radio" class="sr-only" name="usefulness" id="usefulness-{{ i }}" value="{{ i }}" required>
+                  <label for="usefulness-{{ i }}" data-value="{{ i }}"
+                         class="star cursor-pointer text-4xl leading-none select-none"
+                         style="color:#D1D5DB" aria-label="{{ i }}">&#x2605;</label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Language quality rating -->
+            <div>
+              <p class="text-sm font-semibold text-ink">
+                {% if language == "Bangla" %}ভাষাটি কতটা স্বাভাবিক মনে হয়েছে?{% else %}How natural did the language feel?{% endif %}
+              </p>
+              <div class="star-rating mt-2 flex gap-1" role="radiogroup">
+                {% for i in "12345" %}
+                  <input type="radio" class="sr-only" name="language_quality" id="language_quality-{{ i }}" value="{{ i }}" required>
+                  <label for="language_quality-{{ i }}" data-value="{{ i }}"
+                         class="star cursor-pointer text-4xl leading-none select-none"
+                         style="color:#D1D5DB" aria-label="{{ i }}">&#x2605;</label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Comments -->
+            <div>
+              <label for="comments" class="block text-sm font-semibold text-ink">
+                {% if language == "Bangla" %}কোনো মন্তব্য? (ঐচ্ছিক){% else %}Any comments? (optional){% endif %}
+              </label>
+              <textarea id="comments" name="comments" rows="3" maxlength="500"
+                        class="mt-2 w-full rounded-lg border border-line px-4 py-3 text-sm text-ink
+                               focus:border-brand-teal focus:ring-1 focus:ring-brand-teal outline-none"
+                        placeholder="{% if language == 'Bangla' %}আপনার মতামত জানান...{% else %}Tell us what you think...{% endif %}"></textarea>
+              <p class="mt-1 text-xs text-muted text-right"><span id="comment-count">0</span>/500</p>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-brand-teal text-white font-semibold rounded-lg px-6 py-3
+                           hover:bg-[#0c5e57] transition-colors">
+              {% if language == "Bangla" %}মতামত জমা দিন{% else %}Submit Feedback{% endif %}
+            </button>
+          </form>
+        {% endif %}
+      </section>
+    {% endif %}
   </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    (function () {
+      var GOLD = '#F59E0B', GRAY = '#D1D5DB';
+
+      document.querySelectorAll('.star-rating').forEach(function (group) {
+        var stars = group.querySelectorAll('.star');
+
+        function paint(value) {
+          stars.forEach(function (star) {
+            star.style.color = Number(star.dataset.value) <= value ? GOLD : GRAY;
+          });
+        }
+
+        function selectedValue() {
+          var checked = group.querySelector('input:checked');
+          return checked ? Number(checked.value) : 0;
+        }
+
+        stars.forEach(function (star) {
+          var value = Number(star.dataset.value);
+          star.addEventListener('mouseenter', function () { paint(value); });
+          star.addEventListener('click', function () {
+            var input = document.getElementById(star.getAttribute('for'));
+            if (input) { input.checked = true; }
+            paint(value);
+          });
+        });
+
+        group.addEventListener('mouseleave', function () { paint(selectedValue()); });
+      });
+
+      var comments = document.getElementById('comments');
+      var counter = document.getElementById('comment-count');
+      if (comments && counter) {
+        comments.addEventListener('input', function () {
+          counter.textContent = comments.value.length;
+        });
+      }
+    })();
+  </script>
 {% endblock %}

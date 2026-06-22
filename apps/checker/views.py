@@ -5,9 +5,12 @@ step 3 returns the triage result. All AI work is delegated to
 services.ai_service; these views only validate input and manage session state.
 """
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from apps.feedback.models import Feedback
 from services.ai_service import (
     detect_language,
     get_follow_up_questions,
@@ -61,8 +64,10 @@ def get_questions_view(request):
 def get_result_view(request):
     """Step 3 - collect answers, get the triage result, and show the card.
 
-    Logged-in users get a SymptomCheck record saved; guests just see the
-    result. The in-progress session data is cleared either way.
+    A SymptomCheck record is saved for every completed check so the result has
+    a check_pk the feedback form can post to; guest checks keep user=None and
+    so never surface in any user's history timeline. The in-progress session
+    data is cleared either way.
     """
     symptom_text = request.session.get(SESSION_SYMPTOM)
     questions = request.session.get(SESSION_QUESTIONS)
@@ -82,22 +87,53 @@ def get_result_view(request):
 
     result = get_triage_result(symptom_text, questions_and_answers, language)
 
-    if request.user.is_authenticated:
-        SymptomCheck.objects.create(
-            user=request.user,
-            symptom_description=symptom_text,
-            follow_up_questions=questions,
-            follow_up_answers={
-                qa["question"]: qa["answer"] for qa in questions_and_answers
-            },
-            ai_result=result,
-            language=language,
-            triage_tier=result["triage_tier"],
-        )
+    check = SymptomCheck.objects.create(
+        user=request.user if request.user.is_authenticated else None,
+        symptom_description=symptom_text,
+        follow_up_questions=questions,
+        follow_up_answers={
+            qa["question"]: qa["answer"] for qa in questions_and_answers
+        },
+        ai_result=result,
+        language=language,
+        triage_tier=result["triage_tier"],
+    )
 
     for key in (SESSION_SYMPTOM, SESSION_QUESTIONS, SESSION_LANGUAGE):
         request.session.pop(key, None)
 
     return render(
-        request, "checker/result.html", {"result": result, "language": language}
+        request,
+        "checker/result.html",
+        {
+            "result": result,
+            "language": language,
+            "check_pk": check.pk,
+            "feedback_submitted": False,
+        },
+    )
+
+
+@login_required
+def view_result_view(request, pk):
+    """Re-display one saved result (read-only) from the owner's history.
+
+    Only the owner of a non-deleted check may open it; anyone else gets 403,
+    and guests are sent to login by @login_required. Nothing is modified here:
+    the feedback section shows the rating form or the submitted note depending
+    on whether this check has already been rated.
+    """
+    check = get_object_or_404(SymptomCheck, pk=pk, is_deleted=False)
+    if check.user_id != request.user.id:
+        return HttpResponseForbidden("You cannot view someone else's result.")
+
+    return render(
+        request,
+        "checker/result.html",
+        {
+            "result": check.ai_result,
+            "language": check.language,
+            "check_pk": check.pk,
+            "feedback_submitted": Feedback.objects.filter(symptom_check=check).exists(),
+        },
     )
