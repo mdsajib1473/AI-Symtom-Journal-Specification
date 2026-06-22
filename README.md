@@ -1,3 +1,13 @@
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.2-092E20?style=flat-square&logo=django&logoColor=white)
+![Postgres](https://img.shields.io/badge/Database-Supabase%20Postgres-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Groq](https://img.shields.io/badge/AI-Groq%20Llama%203.3%2070B-F55036?style=flat-square)
+![Gunicorn](https://img.shields.io/badge/WSGI-Gunicorn-499848?style=flat-square&logo=gunicorn&logoColor=white)
+![Deployment](https://img.shields.io/badge/Deploy-Render-46E3B7?style=flat-square&logo=render&logoColor=white)
+![Languages](https://img.shields.io/badge/Languages-Bangla%20%2B%20English-orange?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Live-success?style=flat-square)
+
 # SymptomAI - AI Symptom Triage Journal
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-symptom--ai--journal.onrender.com-0F766E?style=for-the-badge)](https://symptom-ai-journal.onrender.com)
@@ -12,7 +22,7 @@ AI Symptom Journal is the only AI symptom checker that speaks Bangla natively, a
 
 ## Live Website
 
-## https://symptom-ai-journal.onrender.com/
+https://symptom-ai-journal.onrender.com/
 
 ## Features
 
@@ -26,7 +36,7 @@ The AI layer is powered by the Groq API (model: `llama-3.3-70b-versatile`) calle
 
 ### Security and Data Handling
 
-All forms use Django's built-in CSRF protection. User inputs are validated server-side (10–1000 character range for symptom descriptions). Ownership is enforced on delete operations - users can only soft-delete their own records, with a 403 returned on any attempt to access another user's data. History entries are soft-deleted (`is_deleted=True`) rather than permanently removed. Session data for in-progress checks is cleared immediately after the result is displayed.
+All forms use Django's built-in CSRF protection. User inputs are validated server-side (10-1000 character range for symptom descriptions). Ownership is enforced on delete operations - users can only soft-delete their own records, with a 403 returned on any attempt to access another user's data. History entries are soft-deleted (`is_deleted=True`) rather than permanently removed. Session data for in-progress checks is cleared immediately after the result is displayed.
 
 ## Screenshots
 
@@ -37,7 +47,6 @@ All forms use Django's built-in CSRF protection. User inputs are validated serve
 ![Check page](screenshots/check2.png)
 ![Follow Up Questions](screenshots/questions2.png)
 ![AI Results](screenshots/results2.png)
-
 
 ## Tech Stack
 
@@ -57,20 +66,20 @@ All forms use Django's built-in CSRF protection. User inputs are validated serve
 ## Project Structure
 
 ```
-├── symptom_journal/        # Django project configuration (settings, root URLs, WSGI)
-├── apps/
-│   ├── checker/            # Symptom check feature (form, follow-up questions, triage result)
-│   ├── accounts/           # User registration and login
-│   └── history/            # History timeline and soft delete
-├── services/
-│   └── ai_service.py       # ALL Groq API calls (language detection, follow-up questions, triage result)
-├── templates/              # HTML templates (base layout, checker flow, history, auth)
-├── static/                 # Static files (CSS, images)
-├── scripts/                # Utility scripts (connectivity test, smoke tests, seed data)
-├── build.sh                # Render deployment script (install, collectstatic, migrate)
-├── Procfile                # Gunicorn start command
-├── runtime.txt             # Python version pin
-└── .env.example            # Environment variable template
+|-- symptom_journal/        # Django project configuration (settings, root URLs, WSGI)
+|-- apps/
+|   |-- checker/            # Symptom check feature (form, follow-up questions, triage result)
+|   |-- accounts/           # User registration and login
+|   `-- history/            # History timeline and soft delete
+|-- services/
+|   `-- ai_service.py       # ALL Groq API calls (language detection, follow-up questions, triage result)
+|-- templates/              # HTML templates (base layout, checker flow, history, auth)
+|-- static/                 # Static files (CSS, images)
+|-- scripts/                # Utility scripts (connectivity test, smoke tests, seed data)
+|-- build.sh                # Render deployment script (install, collectstatic, migrate)
+|-- Procfile                # Gunicorn start command
+|-- runtime.txt             # Python version pin
+`-- .env.example            # Environment variable template
 ```
 
 ## Local Development Setup
