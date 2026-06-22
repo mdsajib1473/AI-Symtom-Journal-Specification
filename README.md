@@ -191,3 +191,6 @@ A successful response prints a JSON array of four follow-up questions. If you se
 ## Disclaimer
 
 SymptomAI is not a medical device and does not provide medical diagnoses. Every triage result includes the disclaimer: *"This is not a medical diagnosis. Consult a qualified doctor."* This application is intended for portfolio and educational purposes only.
+
+## Licence
+The source code is publicly available at github.com/mdsajib1473/AI-Symtom-Journal-Specification under the MIT License.
