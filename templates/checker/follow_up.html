@@ -40,9 +40,11 @@
                 </label>
               </div>
             {% elif q.type == "number" %}
-              <input type="number" name="answer_{{ forloop.counter }}" min="0" required
-                     class="w-full border border-line rounded-lg p-3 text-ink
-                            focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-brand-teal">
+              <input type="text"
+                     name="answer_{{ forloop.counter }}"
+                     placeholder="e.g. 3 days / ৩ দিন / 2 weeks"
+                     required
+                     class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-600 text-gray-800">
             {% else %}
               <input type="text" name="answer_{{ forloop.counter }}" required
                      class="w-full border border-line rounded-lg p-3 text-ink
