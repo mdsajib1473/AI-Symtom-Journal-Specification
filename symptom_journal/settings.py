@@ -163,12 +163,14 @@ STORAGES = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        # Plain storage in development; compressed + hashed in production so
-        # WhiteNoise can serve assets with far-future cache headers.
+        # Plain storage in development; compressed (no manifest) in production.
+        # The non-manifest backend skips strict source-map reference checking,
+        # which a third-party asset (Jazzmin's bootstrap.bundle.min.js.map)
+        # would otherwise fail on during collectstatic.
         "BACKEND": (
             "django.contrib.staticfiles.storage.StaticFilesStorage"
             if DEBUG
-            else "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            else "whitenoise.storage.CompressedStaticFilesStorage"
         ),
     },
 }
