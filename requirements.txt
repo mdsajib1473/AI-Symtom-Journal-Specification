@@ -18,3 +18,7 @@ gunicorn
 
 # IANA time zone data (Windows and slim Linux images have no system tz db)
 tzdata
+
+# Themed Django admin (research dashboard appearance only).
+# PyPI distribution is django-jazzmin; the importable app is "jazzmin".
+django-jazzmin

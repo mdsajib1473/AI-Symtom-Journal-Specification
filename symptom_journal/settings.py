@@ -44,6 +44,8 @@ CSRF_TRUSTED_ORIGINS = [
 # Applications
 # ---------------------------------------------------------------------------
 INSTALLED_APPS = [
+    # Jazzmin must precede django.contrib.admin to theme the admin.
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -180,3 +182,86 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# ---------------------------------------------------------------------------
+# Jazzmin admin theme (admin appearance only - no app behaviour changes)
+# ---------------------------------------------------------------------------
+JAZZMIN_SETTINGS = {
+    # Window title and brand
+    "site_title": "SymptomAI Admin",
+    "site_header": "SymptomAI",
+    "site_brand": "SymptomAI",
+    "welcome_sign": "Welcome to SymptomAI Research Dashboard",
+    "copyright": "MD SAJIB AHAMMAD",
+
+    # Top search bar - search users and symptom checks
+    "search_model": ["auth.user", "checker.symptomcheck"],
+
+    # Icons for each model - use Font Awesome 5 free icons
+    "icons": {
+        "auth.user": "fas fa-users",
+        "checker.symptomcheck": "fas fa-heartbeat",
+        "feedback.feedback": "fas fa-star",
+    },
+    "default_icon_parents": "fas fa-folder",
+    "default_icon_children": "fas fa-circle",
+
+    # Top navigation links
+    "topmenu_links": [
+        {"name": "Live Site", "url": "/", "new_window": True},
+        {"name": "Check Symptoms", "url": "/check/", "new_window": True},
+    ],
+
+    # UI tweaks
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": [
+        "auth",
+        "checker",
+        "feedback",
+    ],
+
+    # Links at the bottom of the sidebar
+    "usermenu_links": [
+        {"name": "Live Site", "url": "/", "new_window": True},
+    ],
+
+    "show_ui_builder": False,
+    "changeform_format": "horizontal_tabs",
+    "language_chooser": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-teal",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-light-teal",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "flatly",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success",
+    },
+}
